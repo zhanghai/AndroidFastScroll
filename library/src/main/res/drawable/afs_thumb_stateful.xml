@@ -21,7 +21,7 @@
     <item android:state_pressed="true">
         <shape
             android:shape="rectangle"
-            android:tint="?colorControlActivated">
+            android:tint="?android:colorControlActivated">
             <size android:width="8dp" android:height="48dp" />
             <solid android:color="@android:color/white" />
         </shape>
@@ -30,7 +30,7 @@
     <item>
         <shape
             android:shape="rectangle"
-            android:tint="?attr/colorControlNormal">
+            android:tint="?android:colorControlNormal">
             <size android:width="8dp" android:height="48dp" />
             <solid android:color="@android:color/white" />
         </shape>

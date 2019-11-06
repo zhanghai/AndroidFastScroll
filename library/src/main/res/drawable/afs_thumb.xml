@@ -19,7 +19,7 @@
 <shape
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle"
-    android:tint="?colorControlActivated">
+    android:tint="?android:colorControlActivated">
 
     <size android:width="8dp" android:height="48dp" />
 

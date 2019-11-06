@@ -125,6 +125,12 @@ public class FastScrollerBuilder {
         mAnimationHelper = animationHelper;
     }
 
+    public void disableScrollbarAutoHide() {
+        DefaultAnimationHelper animationHelper = new DefaultAnimationHelper(mView);
+        animationHelper.setScrollbarAutoHideEnabled(false);
+        mAnimationHelper = animationHelper;
+    }
+
     @NonNull
     public FastScroller build() {
         return new FastScroller(mView, getOrCreateViewHelper(), mPadding, mTrackDrawable,

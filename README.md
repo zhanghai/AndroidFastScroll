@@ -54,6 +54,7 @@ For more customization, please use the methods on [`FastScrollerBuilder`](librar
 - `setTrackDrawable()` and `setThumbDrawable()` allow setting custom drawables for the scrollbar. The `android:state_pressed` state will be updated for them so you can use a selector.
 - `setPopupStyle()` allows customizing the popup view with a lambda that will receive the view.
 - `setAnimationHelper()` allows providing a custom `AnimationHelper` to use an alternative scrollbar animation.
+- `disableScrollbarAutoHide()` allows disabling the auto hide animation for scrollbar. This implies using a `DefaultAnimationHelper`.
 - `useDefaultStyle()` and `useMd2Style()` allow using the predefined styles, which sets the drawables and popup style. `useDefaultStyle()`, as its name suggests, is the default style when a `FastScrollerBuilder` is created.
 
 The default `ViewHelper` implementation for `RecyclerView` supports both `LinearLayoutManager` and `GridLayoutManager`, but assumes that each item has the same height when calculating scroll, as there's no common way to deal with variable item height. If you know how to measure for scrolling in your specific case, you can provide your own `ViewHelper` implementation and fast scroll will work correctly again.

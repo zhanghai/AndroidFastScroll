@@ -1,0 +1,32 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion '28.0.3'
+    defaultConfig {
+        applicationId 'me.zhanghai.android.fastscroll.sample'
+        minSdkVersion 21
+        targetSdkVersion 29
+        versionCode Integer.parseInt(VERSION_CODE)
+        versionName VERSION
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0-beta05'
+    implementation 'com.google.android.material:material:1.1.0-beta01'
+    implementation 'com.jakewharton:butterknife:10.2.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'
+    implementation project(':library')
+}

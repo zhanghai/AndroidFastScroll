@@ -1,0 +1,74 @@
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier 'sources'
+}
+task javadoc(type: Javadoc) {
+    source android.sourceSets.main.java.srcDirs
+    classpath += files(android.getBootClasspath().join(File.pathSeparator))
+}
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    from javadoc.destinationDir
+    classifier 'javadoc'
+    javadoc.failOnError = false
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
+
+install {
+    repositories.mavenInstaller {
+        pom {
+            project {
+                packaging 'aar'
+                name project.name
+                description POM_DESCRIPTION
+                url POM_URL
+                licenses {
+                    license {
+                        name POM_LICENCE_NAME
+                        url POM_LICENCE_URL
+                    }
+                }
+                developers {
+                    developer {
+                        id POM_DEVELOPER_ID
+                        name POM_DEVELOPER_NAME
+                        email POM_DEVELOPER_EMAIL
+                    }
+                }
+                scm {
+                    connection POM_SCM_CONNECTION
+                    developerConnection POM_SCM_DEVELOPER_CONNECTION
+                    url POM_SCM_URL
+                }
+            }
+        }
+    }
+}
+
+def getBintrayKey() {
+    return hasProperty('BINTRAY_KEY') ? BINTRAY_KEY : System.getenv('BINTRAY_KEY') ?:
+            System.console() != null ? System.console().readLine("\nBintray key: ") : ""
+}
+
+bintray {
+    user = BINTRAY_USER
+    key = getBintrayKey()
+    configurations = ['archives']
+    pkg {
+        repo = BINTRAY_REPO
+        name = project.name
+        desc = POM_DESCRIPTION
+        websiteUrl = POM_URL
+        issueTrackerUrl = BINTRAY_ISSUE_TRACKER_URL
+        vcsUrl = BINTRAY_VCS_URL
+        githubRepo = BINTRAY_GITHUB_REPO
+        publicDownloadNumbers = true
+        licenses = [BINTRAY_LICENSE]
+    }
+}

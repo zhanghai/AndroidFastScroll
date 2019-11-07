@@ -33,6 +33,7 @@ import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.math.MathUtils;
 import androidx.core.util.Consumer;
 
@@ -100,7 +101,7 @@ public class FastScroller {
         mTrackView.setBackground(trackDrawable);
         mThumbView = new View(context);
         mThumbView.setBackground(thumbDrawable);
-        mPopupView = new TextView(context);
+        mPopupView = new AppCompatTextView(context);
         mPopupView.setLayoutParams(new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         popupStyle.accept(mPopupView);

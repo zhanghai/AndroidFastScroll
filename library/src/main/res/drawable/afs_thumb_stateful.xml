@@ -30,7 +30,7 @@
     <item>
         <shape
             android:shape="rectangle"
-            android:tint="?attr/colorControlNormal">
+            android:tint="?colorControlNormal">
             <size android:width="8dp" android:height="48dp" />
             <solid android:color="@android:color/white" />
         </shape>

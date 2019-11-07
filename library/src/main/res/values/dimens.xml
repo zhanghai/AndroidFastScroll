@@ -18,7 +18,7 @@
 
 <resources>
 
-    <dimen name="afs_scrollbar_slop">16dp</dimen>
+    <dimen name="afs_min_touch_target_size">48dp</dimen>
 
     <dimen name="afs_popup_min_size">88dp</dimen>
     <dimen name="afs_popup_margin_end">16dp</dimen>

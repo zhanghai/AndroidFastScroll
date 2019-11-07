@@ -38,7 +38,7 @@ import androidx.core.util.Consumer;
 
 public class FastScroller {
 
-    private final int mScrollbarSlop;
+    private final int mMinTouchTargetSize;
     private final int mTouchSlop;
 
     @NonNull
@@ -82,7 +82,8 @@ public class FastScroller {
                         @NonNull Drawable thumbDrawable, @NonNull Consumer<TextView> popupStyle,
                         @NonNull AnimationHelper animationHelper) {
 
-        mScrollbarSlop = view.getResources().getDimensionPixelOffset(R.dimen.afs_scrollbar_slop);
+        mMinTouchTargetSize = view.getResources().getDimensionPixelSize(
+                R.dimen.afs_min_touch_target_size);
         Context context = view.getContext();
         mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
 
@@ -282,9 +283,9 @@ public class FastScroller {
                 mDownX = eventX;
                 mDownY = eventY;
 
-                if (mTrackView.getAlpha() > 0 && isInsideView(mTrackView, eventX, eventY)) {
+                if (mTrackView.getAlpha() > 0 && isInView(mTrackView, eventX, eventY)) {
                     mDragStartY = eventY;
-                    if (isInsideView(mThumbView, eventX, eventY)) {
+                    if (isInViewTouchTarget(mThumbView, eventX, eventY)) {
                         mDragStartThumbOffset = mThumbOffset;
                     } else {
                         mDragStartThumbOffset = (int) (eventY - padding.top - mThumbHeight / 2f);
@@ -295,9 +296,9 @@ public class FastScroller {
                 break;
             case MotionEvent.ACTION_MOVE:
 
-                if (!mDragging && isNearView(mTrackView, mDownX, mDownY)
+                if (!mDragging && isInViewTouchTarget(mTrackView, mDownX, mDownY)
                         && Math.abs(eventY - mDownY) > mTouchSlop) {
-                    if (isNearView(mThumbView, mDownX, mDownY)) {
+                    if (isInViewTouchTarget(mThumbView, mDownX, mDownY)) {
                         mDragStartY = mLastY;
                         mDragStartThumbOffset = mThumbOffset;
                     } else {
@@ -325,18 +326,41 @@ public class FastScroller {
         return mDragging;
     }
 
-    private boolean isInsideView(@NonNull View view, float x, float y) {
-        x += mView.getScrollX();
-        y += mView.getScrollY();
-        return x >= view.getLeft() && x < view.getRight() && y >= view.getTop()
-                && y < view.getBottom();
+    private boolean isInView(@NonNull View view, float x, float y) {
+        int scrollX = mView.getScrollX();
+        int scrollY = mView.getScrollY();
+        return x >= view.getLeft() - scrollX && x < view.getRight() - scrollX
+                && y >= view.getTop() - scrollY && y < view.getBottom() - scrollY;
     }
 
-    private boolean isNearView(@NonNull View view, float x, float y) {
-        x += mView.getScrollX();
-        y += mView.getScrollY();
-        return x >= view.getLeft() - mScrollbarSlop && x < view.getRight() + mScrollbarSlop
-                && y >= view.getTop() - mScrollbarSlop && y < view.getBottom() + mScrollbarSlop;
+    private boolean isInViewTouchTarget(@NonNull View view, float x, float y) {
+        int scrollX = mView.getScrollX();
+        int scrollY = mView.getScrollY();
+        return isInTouchTarget(x, view.getLeft() - scrollX, view.getRight() - scrollX, 0,
+                mView.getWidth())
+                && isInTouchTarget(y, view.getTop() - scrollY, view.getBottom() - scrollY, 0,
+                mView.getHeight());
+    }
+
+    private boolean isInTouchTarget(float position, int viewStart, int viewEnd, int parentStart,
+                                    int parentEnd) {
+        int viewSize = viewEnd - viewStart;
+        if (viewSize >= mMinTouchTargetSize) {
+            return position >= viewStart && position < viewEnd;
+        }
+        int touchTargetStart = viewStart - (mMinTouchTargetSize - viewSize) / 2;
+        if (touchTargetStart < parentStart) {
+            touchTargetStart = parentStart;
+        }
+        int touchTargetEnd = touchTargetStart + mMinTouchTargetSize;
+        if (touchTargetEnd > parentEnd) {
+            touchTargetEnd = parentEnd;
+            touchTargetStart = touchTargetEnd - mMinTouchTargetSize;
+            if (touchTargetStart < parentStart) {
+                touchTargetStart = parentStart;
+            }
+        }
+        return position >= touchTargetStart && position < touchTargetEnd;
     }
 
     private void scrollToThumbOffset(int thumbOffset) {

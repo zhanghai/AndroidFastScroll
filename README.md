@@ -1,5 +1,7 @@
 # AndroidFastScroll
 
+[![Android CI status](https://github.com/zhanghai/AndroidFastScroll/workflows/Android%20CI/badge.svg)](https://github.com/zhanghai/AndroidFastScroll/actions)
+
 Fast scroll for Android `RecyclerView` and more.
 
 This is not an officially supported Google product.

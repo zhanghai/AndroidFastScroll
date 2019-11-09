@@ -27,6 +27,7 @@ import android.graphics.Path;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -139,6 +140,13 @@ class Md2PopupBackground extends Drawable {
 
     @Override
     public void getOutline(@NonNull Outline outline) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q && !mPath.isConvex()) {
+            // The outline path must be convex before Q, but we may run into floating point error
+            // caused by calculation involving sqrt(2) or OEM implementation difference, so in this
+            // case we just omit the shadow instead of crashing.
+            super.getOutline(outline);
+            return;
+        }
         outline.setConvexPath(mPath);
     }
 }

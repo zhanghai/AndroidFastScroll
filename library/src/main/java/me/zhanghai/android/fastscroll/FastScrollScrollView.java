@@ -62,6 +62,7 @@ public class FastScrollScrollView extends ScrollView implements SimpleFastScroll
 
     private void init() {
         setVerticalScrollBarEnabled(false);
+        setScrollContainer(true);
         mMixin = new SimpleFastScrollViewMixin(new SimpleFastScrollViewMixin.ViewAccessor() {
             @Override
             public void superDraw(@NonNull Canvas canvas) {

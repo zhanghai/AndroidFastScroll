@@ -53,6 +53,7 @@ public class FastScrollNestedScrollView extends NestedScrollView implements Simp
     }
 
     private void init() {
+        setScrollContainer(true);
         mMixin = new SimpleFastScrollViewMixin(new SimpleFastScrollViewMixin.ViewAccessor() {
             @Override
             public void superDraw(@NonNull Canvas canvas) {

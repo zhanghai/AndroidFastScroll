@@ -59,8 +59,10 @@ public class FastScrollerBuilder {
         useDefaultStyle();
     }
 
+    @NonNull
     public void setViewHelper(@Nullable FastScroller.ViewHelper viewHelper) {
         mViewHelper = viewHelper;
+        return this;
     }
 
     @NonNull

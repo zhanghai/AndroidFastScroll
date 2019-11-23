@@ -82,7 +82,7 @@ public class LocaleListAdapter extends RecyclerView.Adapter<LocaleListAdapter.Vi
     @Override
     public String getPopupText(int position) {
         Locale locale = getItem(position);
-        return locale.toString().substring(0, 1).toUpperCase();
+        return locale.toString().substring(0, 1).toUpperCase(Locale.getDefault());
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

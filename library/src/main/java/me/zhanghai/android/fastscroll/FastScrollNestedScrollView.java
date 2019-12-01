@@ -28,10 +28,10 @@ import androidx.annotation.Nullable;
 import androidx.core.widget.NestedScrollView;
 
 @SuppressLint("MissingSuperCall")
-public class FastScrollNestedScrollView extends NestedScrollView implements SimpleFastScrollView {
+public class FastScrollNestedScrollView extends NestedScrollView implements ViewHelperProvider {
 
     @NonNull
-    private SimpleFastScrollViewMixin mMixin;
+    private final ViewHelper mViewHelper = new ViewHelper();
 
     public FastScrollNestedScrollView(@NonNull Context context) {
         super(context);
@@ -54,76 +54,79 @@ public class FastScrollNestedScrollView extends NestedScrollView implements Simp
 
     private void init() {
         setScrollContainer(true);
-        mMixin = new SimpleFastScrollViewMixin(new SimpleFastScrollViewMixin.ViewAccessor() {
-            @Override
-            public void superDraw(@NonNull Canvas canvas) {
-                FastScrollNestedScrollView.super.draw(canvas);
-            }
-            @Override
-            public void superOnScrollChanged(int left, int top, int oldLeft, int oldTop) {
-                FastScrollNestedScrollView.super.onScrollChanged(left, top, oldLeft, oldTop);
-            }
-            @Override
-            public boolean superOnInterceptTouchEvent(@NonNull MotionEvent event) {
-                return FastScrollNestedScrollView.super.onInterceptTouchEvent(event);
-            }
-            @Override
-            public boolean superOnTouchEvent(@NonNull MotionEvent event) {
-                return FastScrollNestedScrollView.super.onTouchEvent(event);
-            }
-            @Override
-            public int computeVerticalScrollRange() {
-                return FastScrollNestedScrollView.this.computeVerticalScrollRange();
-            }
-            @Override
-            public int computeVerticalScrollOffset() {
-                return FastScrollNestedScrollView.this.computeVerticalScrollOffset();
-            }
-        });
     }
 
+    @NonNull
     @Override
-    public void setOnPreDrawListener(@Nullable Runnable listener) {
-        mMixin.setOnPreDrawListener(listener);
+    public FastScroller.ViewHelper getViewHelper() {
+        return mViewHelper;
     }
 
     @Override
     public void draw(@NonNull Canvas canvas) {
-        mMixin.draw(canvas);
-    }
-
-    @Override
-    public void setOnScrollChangedListener(@Nullable Runnable listener) {
-        mMixin.setOnScrollChangedListener(listener);
+        mViewHelper.draw(canvas);
     }
 
     @Override
     protected void onScrollChanged(int left, int top, int oldLeft, int oldTop) {
-        mMixin.onScrollChanged(left, top, oldLeft, oldTop);
-    }
-
-    @Override
-    public void setOnTouchEventListener(@Nullable Predicate<MotionEvent> listener) {
-        mMixin.setOnTouchEventListener(listener);
+        mViewHelper.onScrollChanged(left, top, oldLeft, oldTop);
     }
 
     @Override
     public boolean onInterceptTouchEvent(@NonNull MotionEvent event) {
-        return mMixin.onInterceptTouchEvent(event);
+        return mViewHelper.onInterceptTouchEvent(event);
     }
 
     @Override
     public boolean onTouchEvent(@NonNull MotionEvent event) {
-        return mMixin.onTouchEvent(event);
+        return mViewHelper.onTouchEvent(event);
     }
 
-    @Override
-    public int getScrollRange() {
-        return mMixin.getScrollRange() + getPaddingTop() + getPaddingBottom();
-    }
+    private class ViewHelper extends SimpleViewHelper {
 
-    @Override
-    public int getScrollOffset() {
-        return mMixin.getScrollOffset();
+        @Override
+        public int getScrollRange() {
+            return super.getScrollRange() + getPaddingTop() + getPaddingBottom();
+        }
+
+        @Override
+        protected void superDraw(@NonNull Canvas canvas) {
+            FastScrollNestedScrollView.super.draw(canvas);
+        }
+
+        @Override
+        protected void superOnScrollChanged(int left, int top, int oldLeft, int oldTop) {
+            FastScrollNestedScrollView.super.onScrollChanged(left, top, oldLeft, oldTop);
+        }
+
+        @Override
+        protected boolean superOnInterceptTouchEvent(@NonNull MotionEvent event) {
+            return FastScrollNestedScrollView.super.onInterceptTouchEvent(event);
+        }
+
+        @Override
+        protected boolean superOnTouchEvent(@NonNull MotionEvent event) {
+            return FastScrollNestedScrollView.super.onTouchEvent(event);
+        }
+
+        @Override
+        protected int computeVerticalScrollRange() {
+            return FastScrollNestedScrollView.this.computeVerticalScrollRange();
+        }
+
+        @Override
+        protected int computeVerticalScrollOffset() {
+            return FastScrollNestedScrollView.this.computeVerticalScrollOffset();
+        }
+
+        @Override
+        protected int getScrollX() {
+            return FastScrollNestedScrollView.this.getScrollX();
+        }
+
+        @Override
+        protected void scrollTo(int x, int y) {
+            FastScrollNestedScrollView.this.scrollTo(x, y);
+        }
     }
 }

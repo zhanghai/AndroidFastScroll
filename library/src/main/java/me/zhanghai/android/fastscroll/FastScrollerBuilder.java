@@ -144,12 +144,11 @@ public class FastScrollerBuilder {
         if (mViewHelper != null) {
             return mViewHelper;
         }
-        if (mView instanceof RecyclerView) {
+        if (mView instanceof ViewHelperProvider) {
+            return ((ViewHelperProvider) mView).getViewHelper();
+        } else if (mView instanceof RecyclerView) {
             return new RecyclerViewHelper((RecyclerView) mView);
-        } else if (mView instanceof SimpleFastScrollView) {
-            return new SimpleViewHelper<>((ViewGroup & SimpleFastScrollView) mView);
-        }
-        if (mView instanceof NestedScrollView) {
+        } else if (mView instanceof NestedScrollView) {
             throw new UnsupportedOperationException("Please use "
                     + FastScrollNestedScrollView.class.getSimpleName() + " instead of "
                     + NestedScrollView.class.getSimpleName() + "for fast scroll");

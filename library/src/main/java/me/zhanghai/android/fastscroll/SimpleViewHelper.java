@@ -1,63 +1,153 @@
 /*
- * Copyright 2019 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Copyright (c) 2019 Hai Zhang <dreaming.in.code.zh@gmail.com>
+ * All Rights Reserved.
  */
 
 package me.zhanghai.android.fastscroll;
 
+import android.graphics.Canvas;
 import android.view.MotionEvent;
-import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
-public class SimpleViewHelper<T extends ViewGroup & SimpleFastScrollView>
-        implements FastScroller.ViewHelper {
+public abstract class SimpleViewHelper implements FastScroller.ViewHelper {
 
-    @NonNull
-    private final T mView;
+    @Nullable
+    private Runnable mOnPreDrawListener;
 
-    public SimpleViewHelper(@NonNull T view) {
-        mView = view;
+    @Nullable
+    private Runnable mOnScrollChangedListener;
+
+    @Nullable
+    private Predicate<MotionEvent> mOnTouchEventListener;
+    private boolean mListenerInterceptingTouchEvent;
+
+    @Override
+    public void addOnPreDrawListener(@Nullable Runnable listener) {
+        mOnPreDrawListener = listener;
+    }
+
+    public void draw(@NonNull Canvas canvas) {
+
+        if (mOnPreDrawListener != null) {
+            mOnPreDrawListener.run();
+        }
+
+        superDraw(canvas);
     }
 
     @Override
-    public void addOnPreDrawListener(@NonNull Runnable onPreDraw) {
-        mView.setOnPreDrawListener(onPreDraw);
+    public void addOnScrollChangedListener(@Nullable Runnable listener) {
+        mOnScrollChangedListener = listener;
+    }
+
+    public void onScrollChanged(int left, int top, int oldLeft, int oldTop) {
+        superOnScrollChanged(left, top, oldLeft, oldTop);
+
+        if (mOnScrollChangedListener != null) {
+            mOnScrollChangedListener.run();
+        }
     }
 
     @Override
-    public void addOnScrollChangedListener(@NonNull Runnable onScrollChanged) {
-        mView.setOnScrollChangedListener(onScrollChanged);
+    public void addOnTouchEventListener(@Nullable Predicate<MotionEvent> listener) {
+        mOnTouchEventListener = listener;
     }
 
-    @Override
-    public void addOnTouchEventListener(@NonNull Predicate<MotionEvent> onTouchEvent) {
-        mView.setOnTouchEventListener(onTouchEvent);
+    public boolean onInterceptTouchEvent(@NonNull MotionEvent event) {
+
+        if (mOnTouchEventListener != null && mOnTouchEventListener.test(event)) {
+
+            int actionMasked = event.getActionMasked();
+            if (actionMasked != MotionEvent.ACTION_UP
+                    && actionMasked != MotionEvent.ACTION_CANCEL) {
+                mListenerInterceptingTouchEvent = true;
+            }
+
+            if (actionMasked != MotionEvent.ACTION_CANCEL) {
+                MotionEvent cancelEvent = MotionEvent.obtain(event);
+                cancelEvent.setAction(MotionEvent.ACTION_CANCEL);
+                superOnInterceptTouchEvent(cancelEvent);
+                cancelEvent.recycle();
+            } else {
+                superOnInterceptTouchEvent(event);
+            }
+
+            return true;
+        }
+
+        return superOnInterceptTouchEvent(event);
+    }
+
+    public boolean onTouchEvent(@NonNull MotionEvent event) {
+
+        if (mOnTouchEventListener != null) {
+            if (mListenerInterceptingTouchEvent) {
+
+                mOnTouchEventListener.test(event);
+
+                int actionMasked = event.getActionMasked();
+                if (actionMasked == MotionEvent.ACTION_UP
+                        || actionMasked == MotionEvent.ACTION_CANCEL) {
+                    mListenerInterceptingTouchEvent = false;
+                }
+
+                return true;
+            } else {
+                int actionMasked = event.getActionMasked();
+                if (actionMasked != MotionEvent.ACTION_DOWN && mOnTouchEventListener.test(event)) {
+
+                    if (actionMasked != MotionEvent.ACTION_UP
+                            && actionMasked != MotionEvent.ACTION_CANCEL) {
+                        mListenerInterceptingTouchEvent = true;
+                    }
+
+                    if (actionMasked != MotionEvent.ACTION_CANCEL) {
+                        MotionEvent cancelEvent = MotionEvent.obtain(event);
+                        cancelEvent.setAction(MotionEvent.ACTION_CANCEL);
+                        superOnTouchEvent(cancelEvent);
+                        cancelEvent.recycle();
+                    } else {
+                        superOnTouchEvent(event);
+                    }
+
+                    return true;
+                }
+            }
+        }
+
+        return superOnTouchEvent(event);
     }
 
     @Override
     public int getScrollRange() {
-        return mView.getScrollRange();
+        return computeVerticalScrollRange();
     }
 
     @Override
     public int getScrollOffset() {
-        return mView.getScrollOffset();
+        return computeVerticalScrollOffset();
     }
 
     @Override
     public void scrollTo(int offset) {
-        mView.scrollTo(mView.getScrollX(), offset);
+        scrollTo(getScrollX(), offset);
     }
+
+    protected abstract void superDraw(@NonNull Canvas canvas);
+
+    protected abstract void superOnScrollChanged(int left, int top, int oldLeft, int oldTop);
+
+    protected abstract boolean superOnInterceptTouchEvent(@NonNull MotionEvent event);
+
+    protected abstract boolean superOnTouchEvent(@NonNull MotionEvent event);
+
+    protected abstract int computeVerticalScrollRange();
+
+    protected abstract int computeVerticalScrollOffset();
+
+    protected abstract int getScrollX();
+
+    protected abstract void scrollTo(int x, int y);
 }

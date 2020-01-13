@@ -82,7 +82,7 @@ class RecyclerViewHelper implements FastScroller.ViewHelper {
         if (itemCount == 0) {
             return 0;
         }
-        int itemHeight = getItemSize();
+        int itemHeight = getItemHeight();
         if (itemHeight == 0) {
             return 0;
         }
@@ -95,7 +95,7 @@ class RecyclerViewHelper implements FastScroller.ViewHelper {
         if (firstItemPosition == RecyclerView.NO_POSITION) {
             return 0;
         }
-        int itemHeight = getItemSize();
+        int itemHeight = getItemHeight();
         int firstItemTop = getFirstItemOffset();
         return mView.getPaddingTop() + firstItemPosition * itemHeight - firstItemTop;
     }
@@ -105,7 +105,7 @@ class RecyclerViewHelper implements FastScroller.ViewHelper {
         // Stop any scroll in progress for RecyclerView.
         mView.stopScroll();
         offset -= mView.getPaddingTop();
-        int itemHeight = getItemSize();
+        int itemHeight = getItemHeight();
         // firstItemPosition should be non-negative even if paddingTop is greater than item height.
         int firstItemPosition = Math.max(0, offset / itemHeight);
         int firstItemTop = firstItemPosition * itemHeight - offset;
@@ -143,7 +143,7 @@ class RecyclerViewHelper implements FastScroller.ViewHelper {
         return itemCount;
     }
 
-    private int getItemSize() {
+    private int getItemHeight() {
         if (mView.getChildCount() == 0) {
             return 0;
         }

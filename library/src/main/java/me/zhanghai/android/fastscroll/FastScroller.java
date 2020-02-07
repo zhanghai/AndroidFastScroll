@@ -248,8 +248,8 @@ public class FastScroller {
     private void updateScrollbarState() {
         int scrollOffsetRange = getScrollOffsetRange();
         mScrollbarEnabled = scrollOffsetRange > 0;
-        mThumbOffset = mScrollbarEnabled ? getThumbOffsetRange() * mViewHelper.getScrollOffset()
-                / scrollOffsetRange : 0;
+        mThumbOffset = mScrollbarEnabled ? (int) ((long) getThumbOffsetRange()
+                * mViewHelper.getScrollOffset() / scrollOffsetRange) : 0;
     }
 
     private void layoutView(@NonNull View view, int left, int top, int right, int bottom) {
@@ -367,7 +367,7 @@ public class FastScroller {
     private void scrollToThumbOffset(int thumbOffset) {
         int thumbOffsetRange = getThumbOffsetRange();
         thumbOffset = MathUtils.clamp(thumbOffset, 0, thumbOffsetRange);
-        int scrollOffset = getScrollOffsetRange() * thumbOffset / thumbOffsetRange;
+        int scrollOffset = (int) ((long) getScrollOffsetRange() * thumbOffset / thumbOffsetRange);
         mViewHelper.scrollTo(scrollOffset);
     }
 

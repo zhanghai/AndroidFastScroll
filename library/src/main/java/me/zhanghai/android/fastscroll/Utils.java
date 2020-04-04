@@ -17,33 +17,36 @@
 package me.zhanghai.android.fastscroll;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
-import android.util.DisplayMetrics;
-import android.util.TypedValue;
 
 import androidx.annotation.AttrRes;
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.content.res.AppCompatResources;
 
 class Utils {
 
     @ColorInt
     public static int getColorFromAttrRes(@AttrRes int attrRes, @NonNull Context context) {
+        ColorStateList colorStateList = getColorStateListFromAttrRes(attrRes, context);
+        return colorStateList != null ? colorStateList.getDefaultColor() : 0;
+    }
+
+    @Nullable
+    public static ColorStateList getColorStateListFromAttrRes(@AttrRes int attrRes,
+                                                              @NonNull Context context) {
         TypedArray a = context.obtainStyledAttributes(new int[] { attrRes });
-        int type = a.getType(0);
-        if (type >= TypedValue.TYPE_FIRST_INT && type <= TypedValue.TYPE_LAST_INT) {
-            return a.getColor(0, 0);
-        }
         int resId;
         try {
             resId = a.getResourceId(0, 0);
+            if (resId != 0) {
+                return AppCompatResources.getColorStateList(context, resId);
+            }
+            return a.getColorStateList(0);
         } finally {
             a.recycle();
         }
-        if (resId == 0) {
-            return 0;
-        }
-        return AppCompatResources.getColorStateList(context, resId).getDefaultColor();
     }
 }

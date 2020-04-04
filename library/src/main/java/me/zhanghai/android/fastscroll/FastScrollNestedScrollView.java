@@ -110,11 +110,13 @@ public class FastScrollNestedScrollView extends NestedScrollView implements View
         }
 
         @Override
+        @SuppressLint("RestrictedApi")
         protected int computeVerticalScrollRange() {
             return FastScrollNestedScrollView.this.computeVerticalScrollRange();
         }
 
         @Override
+        @SuppressLint("RestrictedApi")
         protected int computeVerticalScrollOffset() {
             return FastScrollNestedScrollView.this.computeVerticalScrollOffset();
         }

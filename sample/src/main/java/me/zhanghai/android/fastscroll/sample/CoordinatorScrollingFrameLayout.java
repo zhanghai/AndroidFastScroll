@@ -16,6 +16,7 @@
 
 package me.zhanghai.android.fastscroll.sample;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
@@ -82,6 +83,7 @@ public class CoordinatorScrollingFrameLayout extends FrameLayout
         public boolean onMeasureChild(@NonNull CoordinatorLayout parent, @NonNull View child,
                                       int parentWidthMeasureSpec, int widthUsed,
                                       int parentHeightMeasureSpec, int heightUsed) {
+            @SuppressLint("RestrictedApi")
             WindowInsetsCompat parentInsets = parent.getLastWindowInsets();
             if (parentInsets != null) {
                 int parentHeightSize = MeasureSpec.getSize(parentHeightMeasureSpec);

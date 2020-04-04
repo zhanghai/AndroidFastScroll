@@ -31,6 +31,10 @@ class Utils {
     @ColorInt
     public static int getColorFromAttrRes(@AttrRes int attrRes, @NonNull Context context) {
         TypedArray a = context.obtainStyledAttributes(new int[] { attrRes });
+        int type = a.getType(0);
+        if (type >= TypedValue.TYPE_FIRST_INT && type <= TypedValue.TYPE_LAST_INT) {
+            return a.getColor(0, 0);
+        }
         int resId;
         try {
             resId = a.getResourceId(0, 0);

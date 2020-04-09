@@ -63,6 +63,8 @@ The default `ViewHelper` implementation for `RecyclerView` supports both `Linear
 
 If you are using any `RecyclerView.ItemDecoration` that implements `onDrawOver()`, you might be interested in [`FixItemDecorationRecyclerView`](library/src/main/java/me/zhanghai/android/fastscroll/FixItemDecorationRecyclerView.java) which can fix the drawing order.
 
+If you are using [`SelectionTracker`](https://developer.android.com/reference/androidx/recyclerview/selection/SelectionTracker) to add multi-selection support to your RecyclerView, you need to invoke `SelectionTrackerBuilder.build()` *after* `FastScrollerBuilder.build()` to get the correct dragging behavior.
+
 You can also refer to the [sample app source](sample/src/main/java/me/zhanghai/android/fastscroll/sample) for how things like window insets and lift on scroll are implemented.
 
 ## License

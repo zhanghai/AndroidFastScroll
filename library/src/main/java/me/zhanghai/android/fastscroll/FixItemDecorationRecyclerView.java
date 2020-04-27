@@ -45,12 +45,12 @@ public class FixItemDecorationRecyclerView extends RecyclerView {
     @Override
     protected void dispatchDraw(@NonNull Canvas canvas) {
         for (int i = 0, count = getItemDecorationCount(); i < count; ++i) {
-            FixItemDecoration decor = (FixItemDecoration) getItemDecorationAt(i);
+            FixItemDecoration decor = (FixItemDecoration) super.getItemDecorationAt(i);
             decor.getItemDecoration().onDraw(canvas, this, decor.getState());
         }
         super.dispatchDraw(canvas);
         for (int i = 0, count = getItemDecorationCount(); i < count; ++i) {
-            FixItemDecoration decor = (FixItemDecoration) getItemDecorationAt(i);
+            FixItemDecoration decor = (FixItemDecoration) super.getItemDecorationAt(i);
             decor.getItemDecoration().onDrawOver(canvas, this, decor.getState());
         }
     }

@@ -105,7 +105,6 @@ public class FixOnItemTouchListenerRecyclerView extends RecyclerView {
                     continue;
                 }
                 if (intercepted) {
-                    mInterceptingListener = listener;
                     mTrackingListeners.remove(listener);
                     event.setAction(MotionEvent.ACTION_CANCEL);
                     for (OnItemTouchListener trackingListener : mTrackingListeners) {
@@ -113,6 +112,7 @@ public class FixOnItemTouchListenerRecyclerView extends RecyclerView {
                     }
                     event.setAction(action);
                     mTrackingListeners.clear();
+                    mInterceptingListener = listener;
                     return true;
                 } else {
                     mTrackingListeners.add(listener);
@@ -123,6 +123,9 @@ public class FixOnItemTouchListenerRecyclerView extends RecyclerView {
 
         @Override
         public void onTouchEvent(@NonNull RecyclerView recyclerView, @NonNull MotionEvent event) {
+            if (mInterceptingListener == null) {
+                return;
+            }
             mInterceptingListener.onTouchEvent(recyclerView, event);
             int action = event.getAction();
             if (action == MotionEvent.ACTION_CANCEL || action == MotionEvent.ACTION_UP) {

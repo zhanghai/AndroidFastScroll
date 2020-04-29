@@ -20,8 +20,8 @@ This is not an officially supported Google product.
 
 [Sample APK](//github.com/zhanghai/AndroidFastScroll/releases/download/v1.1.2/sample-release.apk)
 
-<p><img src="screenshot/default.png" width="49%" />
-<img src="screenshot/md2.png" width="49%" /></p>
+<p><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" width="49%" />
+<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" width="49%" /></p>
 
 ## Implementation
 

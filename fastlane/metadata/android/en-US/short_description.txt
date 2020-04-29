@@ -1,0 +1,1 @@
+Fast scroll for RecyclerView and more

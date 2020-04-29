@@ -1,0 +1,2 @@
+- Added FixOnItemTouchListenerRecyclerView.
+- Fixed FixItemDecorationRecyclerView.

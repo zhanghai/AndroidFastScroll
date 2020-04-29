@@ -1,0 +1,1 @@
+- Fixed issue when theme color is specified with a color literal.

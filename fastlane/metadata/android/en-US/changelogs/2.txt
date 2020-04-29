@@ -1,0 +1,1 @@
+- Fixed handling of min touch target width. It is now 48dp as per guidelines, and the same as in ListView FastScroller.

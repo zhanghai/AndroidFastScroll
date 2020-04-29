@@ -18,7 +18,7 @@ This is not an officially supported Google product.
 
 <a href="https://play.google.com/store/apps/details?id=me.zhanghai.android.fastscroll.sample" target="_blank"><img alt="Google Play" height="90" src="https://play.google.com/intl/en_US/badges/images/generic/en_badge_web_generic.png"/></a>
 
-[Sample APK](//github.com/zhanghai/AndroidFastScroll/releases/download/v1.1.2/sample-release.apk)
+[Sample APK](//github.com/zhanghai/AndroidFastScroll/releases/download/v1.1.3/sample-release.apk)
 
 <p><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" width="49%" />
 <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" width="49%" /></p>
@@ -36,7 +36,7 @@ This library is loosely based on the following AOSP implementations:
 Gradle:
 
 ```gradle
-implementation 'me.zhanghai.android.fastscroll:library:1.1.2'
+implementation 'me.zhanghai.android.fastscroll:library:1.1.3'
 ```
 
 ## Usage

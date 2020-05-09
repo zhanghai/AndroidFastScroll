@@ -52,6 +52,7 @@ You can also implement [`PopupTextProvider`](library/src/main/java/me/zhanghai/a
 For more customization, please use the methods on [`FastScrollerBuilder`](library/src/main/java/me/zhanghai/android/fastscroll/FastScrollerBuilder.java). Namely:
 
 - `setViewHelper()` allows providing a custom `ViewHelper` to support more views.
+- `setPopupTextProvider()` allows providing a custom `PopupTextProvider` if your `RecyclerView.Adapter` cannot implement that interface.
 - `setPadding()` allows setting a custom padding for the scrollbar, instead of the padding of the view.
 - `setTrackDrawable()` and `setThumbDrawable()` allow setting custom drawables for the scrollbar. The `android:state_pressed` state will be updated for them so you can use a selector.
 - `setPopupStyle()` allows customizing the popup view with a lambda that will receive the view.

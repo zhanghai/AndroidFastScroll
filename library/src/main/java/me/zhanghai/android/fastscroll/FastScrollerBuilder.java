@@ -40,6 +40,9 @@ public class FastScrollerBuilder {
     private FastScroller.ViewHelper mViewHelper;
 
     @Nullable
+    private PopupTextProvider mPopupTextProvider;
+
+    @Nullable
     private Rect mPadding;
 
     @NonNull
@@ -62,6 +65,12 @@ public class FastScrollerBuilder {
     @NonNull
     public FastScrollerBuilder setViewHelper(@Nullable FastScroller.ViewHelper viewHelper) {
         mViewHelper = viewHelper;
+        return this;
+    }
+
+    @NonNull
+    public FastScrollerBuilder setPopupTextProvider(@Nullable PopupTextProvider popupTextProvider) {
+        mPopupTextProvider = popupTextProvider;
         return this;
     }
 
@@ -147,7 +156,7 @@ public class FastScrollerBuilder {
         if (mView instanceof ViewHelperProvider) {
             return ((ViewHelperProvider) mView).getViewHelper();
         } else if (mView instanceof RecyclerView) {
-            return new RecyclerViewHelper((RecyclerView) mView);
+            return new RecyclerViewHelper((RecyclerView) mView, mPopupTextProvider);
         } else if (mView instanceof NestedScrollView) {
             throw new UnsupportedOperationException("Please use "
                     + FastScrollNestedScrollView.class.getSimpleName() + " instead of "

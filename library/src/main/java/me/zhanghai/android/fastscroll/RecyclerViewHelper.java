@@ -31,12 +31,16 @@ class RecyclerViewHelper implements FastScroller.ViewHelper {
 
     @NonNull
     private final RecyclerView mView;
+    @Nullable
+    private final PopupTextProvider mPopupTextProvider;
 
     @NonNull
     private final Rect mTempRect = new Rect();
 
-    public RecyclerViewHelper(@NonNull RecyclerView view) {
+    public RecyclerViewHelper(@NonNull RecyclerView view,
+                              @Nullable PopupTextProvider popupTextProvider) {
         mView = view;
+        mPopupTextProvider = popupTextProvider;
     }
 
     @Override
@@ -115,11 +119,16 @@ class RecyclerViewHelper implements FastScroller.ViewHelper {
     @Nullable
     @Override
     public String getPopupText() {
-        RecyclerView.Adapter<?> adapter = mView.getAdapter();
-        if (!(adapter instanceof PopupTextProvider)) {
+        PopupTextProvider popupTextProvider = mPopupTextProvider;
+        if (popupTextProvider == null) {
+            RecyclerView.Adapter<?> adapter = mView.getAdapter();
+            if (adapter instanceof PopupTextProvider) {
+                popupTextProvider = (PopupTextProvider) adapter;
+            }
+        }
+        if (popupTextProvider == null) {
             return null;
         }
-        PopupTextProvider popupTextProvider = (PopupTextProvider) adapter;
         int position = getFirstItemAdapterPosition();
         if (position == RecyclerView.NO_POSITION) {
             return null;

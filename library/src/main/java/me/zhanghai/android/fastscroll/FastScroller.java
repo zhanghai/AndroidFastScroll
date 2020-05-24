@@ -29,13 +29,13 @@ import android.view.ViewGroupOverlay;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import java.util.Objects;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.math.MathUtils;
 import androidx.core.util.Consumer;
+
+import java.util.Objects;
 
 public class FastScroller {
 
@@ -81,11 +81,15 @@ public class FastScroller {
     public FastScroller(@NonNull ViewGroup view, @NonNull ViewHelper viewHelper,
                         @Nullable Rect padding, @NonNull Drawable trackDrawable,
                         @NonNull Drawable thumbDrawable, @NonNull Consumer<TextView> popupStyle,
-                        @NonNull AnimationHelper animationHelper) {
+                        @NonNull AnimationHelper animationHelper, int minTouchTargetSize) {
 
-        mMinTouchTargetSize = view.getResources().getDimensionPixelSize(
-                R.dimen.afs_min_touch_target_size);
         Context context = view.getContext();
+
+        if (minTouchTargetSize > -1)
+            mMinTouchTargetSize = Utils.dpToPixel(context, minTouchTargetSize);
+        else
+            mMinTouchTargetSize = view.getResources().getDimensionPixelSize(R.dimen.afs_min_touch_target_size);
+
         mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
 
         mView = view;

@@ -42,6 +42,8 @@ public class FastScrollerBuilder {
     @Nullable
     private PopupTextProvider mPopupTextProvider;
 
+    private int mMinTouchTargetSize = -1;
+
     @Nullable
     private Rect mPadding;
 
@@ -71,6 +73,12 @@ public class FastScrollerBuilder {
     @NonNull
     public FastScrollerBuilder setPopupTextProvider(@Nullable PopupTextProvider popupTextProvider) {
         mPopupTextProvider = popupTextProvider;
+        return this;
+    }
+
+    @NonNull
+    public FastScrollerBuilder setMinTouchTargetSize(int sizeDp) {
+        mMinTouchTargetSize = sizeDp;
         return this;
     }
 
@@ -145,7 +153,7 @@ public class FastScrollerBuilder {
     @NonNull
     public FastScroller build() {
         return new FastScroller(mView, getOrCreateViewHelper(), mPadding, mTrackDrawable,
-                mThumbDrawable, mPopupStyle, getOrCreateAnimationHelper());
+                mThumbDrawable, mPopupStyle, getOrCreateAnimationHelper(), mMinTouchTargetSize);
     }
 
     @NonNull

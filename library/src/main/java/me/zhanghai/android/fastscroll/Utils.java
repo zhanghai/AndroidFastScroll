@@ -19,6 +19,7 @@ package me.zhanghai.android.fastscroll;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
+import android.util.DisplayMetrics;
 
 import androidx.annotation.AttrRes;
 import androidx.annotation.ColorInt;
@@ -37,7 +38,7 @@ class Utils {
     @Nullable
     public static ColorStateList getColorStateListFromAttrRes(@AttrRes int attrRes,
                                                               @NonNull Context context) {
-        TypedArray a = context.obtainStyledAttributes(new int[] { attrRes });
+        TypedArray a = context.obtainStyledAttributes(new int[]{attrRes});
         int resId;
         try {
             resId = a.getResourceId(0, 0);
@@ -48,5 +49,10 @@ class Utils {
         } finally {
             a.recycle();
         }
+    }
+
+    public static int dpToPixel(@NonNull final Context context, int dp) {
+        float scaleFactor = (1.0f / DisplayMetrics.DENSITY_DEFAULT) * context.getResources().getDisplayMetrics().densityDpi;
+        return (int) (dp * scaleFactor);
     }
 }

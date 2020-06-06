@@ -39,6 +39,23 @@ Gradle:
 implementation 'me.zhanghai.android.fastscroll:library:1.1.4'
 ```
 
+This library uses [Java 8 bytecode](https://developer.android.com/studio/write/java8-support), so you will need to enable it in your project as well:
+
+```gradle
+android {
+    ...
+    // For Java projects
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    // For Kotlin projects
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+}
+```
+
 ## Usage
 
 Simply create a `FastScroller` with `FastScrollerBuilder`, and enjoy!

@@ -26,7 +26,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.util.Consumer;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.RecyclerView;
@@ -117,8 +116,10 @@ public class FastScrollerBuilder {
     @NonNull
     public FastScrollerBuilder useDefaultStyle() {
         Context context = mView.getContext();
-        mTrackDrawable = AppCompatResources.getDrawable(context, R.drawable.afs_track);
-        mThumbDrawable = AppCompatResources.getDrawable(context, R.drawable.afs_thumb);
+        mTrackDrawable = Utils.getGradientDrawableWithTintAttr(R.drawable.afs_track,
+                R.attr.colorControlNormal, context);
+        mThumbDrawable = Utils.getGradientDrawableWithTintAttr(R.drawable.afs_thumb,
+                R.attr.colorControlActivated, context);
         mPopupStyle = PopupStyles.DEFAULT;
         return this;
     }
@@ -126,8 +127,10 @@ public class FastScrollerBuilder {
     @NonNull
     public FastScrollerBuilder useMd2Style() {
         Context context = mView.getContext();
-        mTrackDrawable = AppCompatResources.getDrawable(context, R.drawable.afs_md2_track);
-        mThumbDrawable = AppCompatResources.getDrawable(context, R.drawable.afs_md2_thumb);
+        mTrackDrawable = Utils.getGradientDrawableWithTintAttr(R.drawable.afs_md2_track,
+                R.attr.colorControlNormal, context);
+        mThumbDrawable = Utils.getGradientDrawableWithTintAttr(R.drawable.afs_md2_thumb,
+                R.attr.colorControlActivated, context);
         mPopupStyle = PopupStyles.MD2;
         return this;
     }

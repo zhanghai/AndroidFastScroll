@@ -19,12 +19,17 @@ package me.zhanghai.android.fastscroll;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
 
 import androidx.annotation.AttrRes;
 import androidx.annotation.ColorInt;
+import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.content.res.AppCompatResources;
+import androidx.core.graphics.drawable.DrawableCompat;
 
 class Utils {
 
@@ -48,5 +53,20 @@ class Utils {
         } finally {
             a.recycle();
         }
+    }
+
+    // Work around the bug that GradientDrawable didn't actually implement tinting until
+    // Lollipop MR1 (API 22).
+    @Nullable
+    public static Drawable getGradientDrawableWithTintAttr(@DrawableRes int drawableRes,
+                                                           @AttrRes int tintAttrRes,
+                                                           @NonNull Context context) {
+        Drawable drawable = AppCompatResources.getDrawable(context, drawableRes);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1
+                && drawable instanceof GradientDrawable) {
+            drawable = DrawableCompat.wrap(drawable);
+            drawable.setTintList(getColorStateListFromAttrRes(tintAttrRes, context));
+        }
+        return drawable;
     }
 }

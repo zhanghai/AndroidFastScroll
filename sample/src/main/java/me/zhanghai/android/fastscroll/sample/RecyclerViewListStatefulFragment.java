@@ -32,6 +32,10 @@ public class RecyclerViewListStatefulFragment extends RecyclerViewFragment {
     @NonNull
     protected FastScroller createFastScroller(@NonNull RecyclerView recyclerView) {
         return new FastScrollerBuilder(recyclerView)
+                // It was later discovered that the following XML drawable doesn't work on
+                // Lollipop (API 21) due to the bug that GradientDrawable didn't actually implement
+                // tinting until Lollipop MR1 (API 22). So if you need to support API 21, you'll
+                // need to work around it yourself.
                 .setThumbDrawable(AppCompatResources.getDrawable(recyclerView.getContext(),
                         R.drawable.afs_thumb_stateful))
                 .build();

@@ -24,7 +24,6 @@ import android.view.Gravity;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.util.Consumer;
 
 public class PopupStyles {
@@ -42,8 +41,8 @@ public class PopupStyles {
         layoutParams.setMarginEnd(resources.getDimensionPixelOffset(R.dimen.afs_popup_margin_end));
         popupView.setLayoutParams(layoutParams);
         Context context = popupView.getContext();
-        popupView.setBackground(new AutoMirrorDrawable(AppCompatResources.getDrawable(context,
-                R.drawable.afs_popup_background)));
+        popupView.setBackground(new AutoMirrorDrawable(Utils.getGradientDrawableWithTintAttr(
+                R.drawable.afs_popup_background, R.attr.colorControlActivated, context)));
         popupView.setEllipsize(TextUtils.TruncateAt.MIDDLE);
         popupView.setGravity(Gravity.CENTER);
         popupView.setIncludeFontPadding(false);

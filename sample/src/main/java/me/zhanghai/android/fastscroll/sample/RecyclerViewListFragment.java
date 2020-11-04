@@ -17,8 +17,6 @@
 package me.zhanghai.android.fastscroll.sample;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 public class RecyclerViewListFragment extends RecyclerViewFragment {
 

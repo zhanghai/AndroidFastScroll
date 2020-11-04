@@ -16,6 +16,10 @@
   ~ limitations under the License.
   -->
 
+<!--
+  ~ Any changes to the tint here needs to be mirrored in the call to
+  ~ Utils.getGradientDrawableWithTintAttr() as well.
+  -->
 <shape
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle"

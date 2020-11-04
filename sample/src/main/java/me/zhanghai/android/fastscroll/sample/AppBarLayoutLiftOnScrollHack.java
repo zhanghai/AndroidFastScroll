@@ -30,7 +30,8 @@ public class AppBarLayoutLiftOnScrollHack {
             // Invalidate the cached view reference so that this works after replacing fragment.
             appBarLayout.setLiftOnScrollTargetViewId(liftOnScrollTargetViewId);
             // Call AppBarLayout.Behavior.onNestedPreScroll() with dy == 0 to update lifted state.
-            CoordinatorLayout.Behavior behavior =
+            //noinspection unchecked
+            CoordinatorLayout.Behavior<AppBarLayout> behavior =
                     ((CoordinatorLayout.LayoutParams) appBarLayout.getLayoutParams()).getBehavior();
             CoordinatorLayout coordinatorLayout = (CoordinatorLayout) appBarLayout.getParent();
             behavior.onNestedPreScroll(coordinatorLayout, appBarLayout, coordinatorLayout, 0, 0,

@@ -16,10 +16,10 @@
 
 package me.zhanghai.android.fastscroll.sample;
 
-import com.google.android.material.appbar.AppBarLayout;
-
 import androidx.annotation.NonNull;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+
+import com.google.android.material.appbar.AppBarLayout;
 
 public class AppBarLayoutLiftOnScrollHack {
 

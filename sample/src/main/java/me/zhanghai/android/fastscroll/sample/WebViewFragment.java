@@ -29,15 +29,13 @@ import android.webkit.WebViewClient;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import me.zhanghai.android.fastscroll.FastScrollWebView;
+
 import me.zhanghai.android.fastscroll.FastScrollerBuilder;
+import me.zhanghai.android.fastscroll.sample.databinding.WebViewFragmentBinding;
 
 public class WebViewFragment extends Fragment {
 
-    @BindView(R.id.scrolling_view)
-    FastScrollWebView mWebView;
+    private WebViewFragmentBinding mBinding;
 
     @NonNull
     public static WebViewFragment newInstance() {
@@ -48,14 +46,8 @@ public class WebViewFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.web_view_fragment, container, false);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        ButterKnife.bind(this, view);
+        mBinding = WebViewFragmentBinding.inflate(inflater, container, false);
+        return mBinding.getRoot();
     }
 
     @Override
@@ -63,35 +55,37 @@ public class WebViewFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mWebView.getSettings().setJavaScriptEnabled(true);
-        mWebView.setOnApplyWindowInsetsListener(new ScrollingViewOnApplyWindowInsetsListener() {
-            @NonNull
-            @Override
-            public WindowInsets onApplyWindowInsets(@NonNull View view,
-                                                    @NonNull WindowInsets insets) {
-                insets = super.onApplyWindowInsets(view, insets);
-                updateWebViewPadding();
-                return insets;
-            }
-        });
-        mWebView.setWebViewClient(new WebViewClient() {
+        mBinding.scrollingView.getSettings().setJavaScriptEnabled(true);
+        mBinding.scrollingView.setOnApplyWindowInsetsListener(
+                new ScrollingViewOnApplyWindowInsetsListener() {
+                    @NonNull
+                    @Override
+                    public WindowInsets onApplyWindowInsets(@NonNull View view,
+                                                            @NonNull WindowInsets insets) {
+                        insets = super.onApplyWindowInsets(view, insets);
+                        updateWebViewPadding();
+                        return insets;
+                    }
+                });
+        mBinding.scrollingView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(@NonNull WebView view, @NonNull String url) {
                 updateWebViewPadding();
             }
         });
-        String html = getString(R.string.html_format, License.get(mWebView.getContext()));
+        String html = getString(R.string.html_format, License.get(
+                mBinding.scrollingView.getContext()));
         String data = Base64.encodeToString(html.getBytes(), Base64.NO_PADDING);
-        mWebView.loadData(data, null, "base64");
-        new FastScrollerBuilder(mWebView).useMd2Style().build();
+        mBinding.scrollingView.loadData(data, null, "base64");
+        new FastScrollerBuilder(mBinding.scrollingView).useMd2Style().build();
     }
 
     private void updateWebViewPadding() {
-        mWebView.loadUrl("javascript:(function () { document.body.style.margin = '"
-                + pxToDp(mWebView.getPaddingTop()) + "px "
-                + pxToDp(mWebView.getPaddingRight()) + "px "
-                + pxToDp(mWebView.getPaddingBottom()) + "px "
-                + pxToDp(mWebView.getPaddingLeft()) + "px'; })();");
+        mBinding.scrollingView.loadUrl("javascript:(function () { document.body.style.margin = '"
+                + pxToDp(mBinding.scrollingView.getPaddingTop()) + "px "
+                + pxToDp(mBinding.scrollingView.getPaddingRight()) + "px "
+                + pxToDp(mBinding.scrollingView.getPaddingBottom()) + "px "
+                + pxToDp(mBinding.scrollingView.getPaddingLeft()) + "px'; })();");
     }
 
     private float pxToDp(float px) {

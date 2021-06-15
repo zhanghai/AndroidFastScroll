@@ -18,17 +18,15 @@ package me.zhanghai.android.fastscroll.sample;
 
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-
-import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+import java.util.Locale;
+
 import me.zhanghai.android.fastscroll.PopupTextProvider;
+import me.zhanghai.android.fastscroll.sample.databinding.ListItemBinding;
 
 public class LocaleListAdapter extends RecyclerView.Adapter<LocaleListAdapter.ViewHolder>
         implements PopupTextProvider {
@@ -60,22 +58,24 @@ public class LocaleListAdapter extends RecyclerView.Adapter<LocaleListAdapter.Vi
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ViewHolder holder = new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(
-                R.layout.list_item, parent, false));
-        holder.itemView.setClickable(true);
-        holder.itemView.setFocusable(true);
-        holder.titleText.setEllipsize(TextUtils.TruncateAt.END);
-        holder.titleText.setSingleLine();
-        holder.subtitleText.setEllipsize(TextUtils.TruncateAt.END);
-        holder.subtitleText.setSingleLine();
+        ViewHolder holder = new ViewHolder(ListItemBinding.inflate(
+                LayoutInflater.from(parent.getContext()), parent, false));
+        ListItemBinding binding = holder.binding;
+        binding.getRoot().setClickable(true);
+        binding.getRoot().setFocusable(true);
+        binding.titleText.setEllipsize(TextUtils.TruncateAt.END);
+        binding.titleText.setSingleLine();
+        binding.subtitleText.setEllipsize(TextUtils.TruncateAt.END);
+        binding.subtitleText.setSingleLine();
         return holder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Locale locale = getItem(position);
-        holder.titleText.setText(locale.toString());
-        holder.subtitleText.setText(locale.getDisplayName());
+        ListItemBinding binding = holder.binding;
+        binding.titleText.setText(locale.toString());
+        binding.subtitleText.setText(locale.getDisplayName());
     }
 
     @NonNull
@@ -87,15 +87,12 @@ public class LocaleListAdapter extends RecyclerView.Adapter<LocaleListAdapter.Vi
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.title)
-        TextView titleText;
-        @BindView(R.id.subtitle)
-        TextView subtitleText;
+        public final ListItemBinding binding;
 
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
+        public ViewHolder(@NonNull ListItemBinding binding) {
+            super(binding.getRoot());
 
-            ButterKnife.bind(this, itemView);
+            this.binding = binding;
         }
     }
 }

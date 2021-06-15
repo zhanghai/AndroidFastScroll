@@ -19,7 +19,7 @@
 <androidx.drawerlayout.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/drawer"
+    android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
@@ -30,14 +30,14 @@
         android:fitsSystemWindows="true">
 
         <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/app_bar"
+            android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?colorSurface"
             android:fitsSystemWindows="true"
             android:theme="?actionBarTheme"
             app:liftOnScroll="true"
-            app:liftOnScrollTargetViewId="@id/scrolling_view">
+            app:liftOnScrollTargetViewId="@id/scrollingView">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -48,7 +48,7 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <me.zhanghai.android.fastscroll.sample.CoordinatorScrollingFrameLayout
-            android:id="@+id/content"
+            android:id="@+id/contentLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

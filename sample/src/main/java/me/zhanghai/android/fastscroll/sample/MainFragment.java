@@ -29,33 +29,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.google.android.material.appbar.AppBarLayout;
-import com.google.android.material.navigation.NavigationView;
-
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+import me.zhanghai.android.fastscroll.sample.databinding.MainFragmentBinding;
 
 public class MainFragment extends Fragment {
 
     private static final Uri GITHUB_URI = Uri.parse(
             "https://github.com/zhanghai/AndroidFastScroll");
 
-    @BindView(R.id.drawer)
-    DrawerLayout mDrawerLayout;
-    @BindView(R.id.navigation)
-    NavigationView mNavigationView;
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
-    @BindView(R.id.app_bar)
-    AppBarLayout mAppBarLayout;
+    private MainFragmentBinding mBinding;
 
     @NonNull
     public static MainFragment newInstance() {
@@ -73,14 +61,8 @@ public class MainFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.main_fragment, container, false);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        ButterKnife.bind(this, view);
+        mBinding = MainFragmentBinding.inflate(inflater, container, false);
+        return mBinding.getRoot();
     }
 
     @Override
@@ -95,14 +77,14 @@ public class MainFragment extends Fragment {
                     | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
         }
 
-        activity.setSupportActionBar(mToolbar);
+        activity.setSupportActionBar(mBinding.toolbar);
 
         if (savedInstanceState == null) {
             setNavigationCheckedItem(R.id.recycler_view_list);
         }
-        mNavigationView.setNavigationItemSelectedListener(this::onNavigationItemSelected);
+        mBinding.navigation.setNavigationItemSelectedListener(this::onNavigationItemSelected);
 
-        AppBarLayoutLiftOnScrollHack.hack(mAppBarLayout, R.id.scrolling_view);
+        AppBarLayoutLiftOnScrollHack.hack(mBinding.appBarLayout, R.id.scrollingView);
     }
 
     @Override
@@ -114,7 +96,7 @@ public class MainFragment extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                mDrawerLayout.openDrawer(GravityCompat.START);
+                mBinding.drawerLayout.openDrawer(GravityCompat.START);
                 return true;
             case R.id.action_view_on_github:
                 viewOnGitHub();
@@ -125,8 +107,8 @@ public class MainFragment extends Fragment {
     }
 
     public boolean onBackPressed() {
-        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
-            mDrawerLayout.closeDrawer(GravityCompat.START);
+        if (mBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            mBinding.drawerLayout.closeDrawer(GravityCompat.START);
             return true;
         }
         return false;
@@ -152,7 +134,7 @@ public class MainFragment extends Fragment {
             case R.id.nested_scroll_view:
             case R.id.web_view:
                 setNavigationCheckedItem(itemId);
-                mDrawerLayout.closeDrawer(GravityCompat.START);
+                mBinding.drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
             default:
                 return false;
@@ -160,7 +142,7 @@ public class MainFragment extends Fragment {
     }
 
     private void setNavigationCheckedItem(@IdRes int itemId) {
-        MenuItem item = mNavigationView.getCheckedItem();
+        MenuItem item = mBinding.navigation.getCheckedItem();
         if (item != null && item.getItemId() == itemId) {
             return;
         }
@@ -191,8 +173,8 @@ public class MainFragment extends Fragment {
                 throw new AssertionError(itemId);
         }
         getChildFragmentManager().beginTransaction()
-                .replace(R.id.content, fragment)
+                .replace(R.id.contentLayout, fragment)
                 .commit();
-        mNavigationView.setCheckedItem(itemId);
+        mBinding.navigation.setCheckedItem(itemId);
     }
 }

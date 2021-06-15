@@ -23,14 +23,14 @@ import android.view.View;
 import android.view.WindowInsets;
 import android.widget.FrameLayout;
 
-import com.google.android.material.appbar.AppBarLayout;
-
 import androidx.annotation.AttrRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StyleRes;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.google.android.material.appbar.AppBarLayout;
 
 public class CoordinatorScrollingFrameLayout extends FrameLayout
         implements CoordinatorLayout.AttachedBehavior {

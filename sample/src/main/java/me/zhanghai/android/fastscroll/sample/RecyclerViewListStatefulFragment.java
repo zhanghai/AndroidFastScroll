@@ -19,6 +19,7 @@ package me.zhanghai.android.fastscroll.sample;
 import androidx.annotation.NonNull;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.recyclerview.widget.RecyclerView;
+
 import me.zhanghai.android.fastscroll.FastScroller;
 import me.zhanghai.android.fastscroll.FastScrollerBuilder;
 

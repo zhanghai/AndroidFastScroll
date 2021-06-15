@@ -22,6 +22,7 @@ import android.view.WindowInsets;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import me.zhanghai.android.fastscroll.FastScroller;
 
 public class ScrollingViewOnApplyWindowInsetsListener implements View.OnApplyWindowInsetsListener {

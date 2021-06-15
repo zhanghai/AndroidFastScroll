@@ -20,22 +20,17 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import me.zhanghai.android.fastscroll.FastScrollNestedScrollView;
+
 import me.zhanghai.android.fastscroll.FastScrollerBuilder;
+import me.zhanghai.android.fastscroll.sample.databinding.NestedScrollViewFragmentBinding;
 
 public class NestedScrollViewFragment extends Fragment {
 
-    @BindView(R.id.scrolling_view)
-    FastScrollNestedScrollView mScrollView;
-    @BindView(R.id.text)
-    TextView mTextView;
+    private NestedScrollViewFragmentBinding mBinding;
 
     @NonNull
     public static NestedScrollViewFragment newInstance() {
@@ -46,22 +41,17 @@ public class NestedScrollViewFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.nested_scroll_view_fragment, container, false);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        ButterKnife.bind(this, view);
+        mBinding = NestedScrollViewFragmentBinding.inflate(inflater, container, false);
+        return mBinding.getRoot();
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mScrollView.setOnApplyWindowInsetsListener(new ScrollingViewOnApplyWindowInsetsListener());
-        new FastScrollerBuilder(mScrollView).useMd2Style().build();
-        mTextView.setText(License.get(mTextView.getContext()));
+        mBinding.scrollingView.setOnApplyWindowInsetsListener(
+                new ScrollingViewOnApplyWindowInsetsListener());
+        new FastScrollerBuilder(mBinding.scrollingView).useMd2Style().build();
+        mBinding.text.setText(License.get(mBinding.text.getContext()));
     }
 }

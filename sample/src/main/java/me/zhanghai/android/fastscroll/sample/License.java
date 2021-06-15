@@ -18,11 +18,11 @@ package me.zhanghai.android.fastscroll.sample;
 
 import android.content.Context;
 
-import java.io.IOException;
-import java.io.InputStream;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 public class License {
 

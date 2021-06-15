@@ -1,0 +1,2 @@
+- Updated dependencies.
+- Published library to Maven Central.

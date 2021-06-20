@@ -71,7 +71,7 @@ For more customization, please use the methods on [`FastScrollerBuilder`](librar
 - `setViewHelper()` allows providing a custom `ViewHelper` to support more views.
 - `setPopupTextProvider()` allows providing a custom `PopupTextProvider` if your `RecyclerView.Adapter` cannot implement that interface.
 - `setPadding()` allows setting a custom padding for the scrollbar, instead of the padding of the view.
-- `setTrackDrawable()` and `setThumbDrawable()` allow setting custom drawables for the scrollbar. The `android:state_pressed` state will be updated for them so you can use a selector.
+- `setTrackDrawable()` and `setThumbDrawable()` allow setting custom drawables for the scrollbar. The `android:state_pressed` state will be updated for them so you can use a selector. The track drawable needs to have an intrinsic width and the thumb drawable needs to have an intrinsic size, in order to allow proper touch event handling.
 - `setPopupStyle()` allows customizing the popup view with a lambda that will receive the view.
 - `setAnimationHelper()` allows providing a custom `AnimationHelper` to use an alternative scrollbar animation.
 - `disableScrollbarAutoHide()` allows disabling the auto hide animation for scrollbar. This implies using a `DefaultAnimationHelper`.

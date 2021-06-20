@@ -93,9 +93,12 @@ public class FastScroller {
         mUserPadding = padding;
         mAnimationHelper = animationHelper;
 
-        mTrackWidth = trackDrawable.getIntrinsicWidth();
-        mThumbWidth = thumbDrawable.getIntrinsicWidth();
-        mThumbHeight = thumbDrawable.getIntrinsicHeight();
+        mTrackWidth = requireNonNegative(trackDrawable.getIntrinsicWidth(),
+                "trackDrawable.getIntrinsicWidth() < 0");
+        mThumbWidth = requireNonNegative(thumbDrawable.getIntrinsicWidth(),
+                "thumbDrawable.getIntrinsicWidth() < 0");
+        mThumbHeight = requireNonNegative(thumbDrawable.getIntrinsicHeight(),
+                "thumbDrawable.getIntrinsicHeight() < 0");
 
         mTrackView = new View(context);
         mTrackView.setBackground(trackDrawable);
@@ -117,6 +120,13 @@ public class FastScroller {
         mViewHelper.addOnPreDrawListener(this::onPreDraw);
         mViewHelper.addOnScrollChangedListener(this::onScrollChanged);
         mViewHelper.addOnTouchEventListener(this::onTouchEvent);
+    }
+
+    private static int requireNonNegative(int value, @NonNull String message) {
+        if (value < 0) {
+            throw new IllegalArgumentException(message);
+        }
+        return value;
     }
 
     public void setPadding(int left, int top, int right, int bottom) {

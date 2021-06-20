@@ -1,0 +1,1 @@
+- Added checks requiring intrinsic size for track and thumb drawables.

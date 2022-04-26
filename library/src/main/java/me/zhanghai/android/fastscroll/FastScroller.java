@@ -294,14 +294,9 @@ public class FastScroller {
                 mDownX = eventX;
                 mDownY = eventY;
 
-                if (mTrackView.getAlpha() > 0 && isInView(mTrackView, eventX, eventY)) {
+                if (mThumbView.getAlpha() > 0 && isInViewTouchTarget(mThumbView, eventX, eventY)) {
                     mDragStartY = eventY;
-                    if (isInViewTouchTarget(mThumbView, eventX, eventY)) {
-                        mDragStartThumbOffset = mThumbOffset;
-                    } else {
-                        mDragStartThumbOffset = (int) (eventY - padding.top - mThumbHeight / 2f);
-                        scrollToThumbOffset(mDragStartThumbOffset);
-                    }
+                    mDragStartThumbOffset = mThumbOffset;
                     setDragging(true);
                 }
                 break;

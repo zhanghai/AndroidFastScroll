@@ -189,7 +189,7 @@ public class FastScroller {
         Rect padding = getPadding();
         int trackLeft = isLayoutRtl ? padding.left : viewWidth - padding.right - mTrackWidth;
         layoutView(mTrackView, trackLeft, padding.top, trackLeft + mTrackWidth,
-                viewHeight - padding.bottom);
+                Math.max(viewHeight - padding.bottom, padding.top));
         int thumbLeft = isLayoutRtl ? padding.left : viewWidth - padding.right - mThumbWidth;
         int thumbTop = padding.top + mThumbOffset;
         layoutView(mThumbView, thumbLeft, thumbTop, thumbLeft + mThumbWidth,

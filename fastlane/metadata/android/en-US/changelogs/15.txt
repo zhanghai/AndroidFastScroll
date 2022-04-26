@@ -1,0 +1,2 @@
+- Fixed conflict with back gesture navigation.
+- Fixed crash when total vertical padding is larger than view height.

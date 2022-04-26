@@ -31,7 +31,9 @@
         android:theme="@style/Theme.Sample"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name="me.zhanghai.android.fastscroll.sample.MainActivity">
+        <activity
+            android:name="me.zhanghai.android.fastscroll.sample.MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

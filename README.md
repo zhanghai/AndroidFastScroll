@@ -1,6 +1,6 @@
 # AndroidFastScroll
 
-[![Android CI status](https://github.com/zhanghai/AndroidFastScroll/workflows/Android%20CI/badge.svg)](https://github.com/zhanghai/AndroidFastScroll/actions)
+[![Android CI status](https://github.com/zhanghai/AndroidFastScroll/workflows/Android%20CI/badge.svg)](https://github.com/zhanghai/AndroidFastScroll/actions) [![GitHub release](https://img.shields.io/github/v/release/zhanghai/AndroidFastScroll)](https://github.com/zhanghai/AndroidFastScroll/releases) [![License](https://img.shields.io/github/license/zhanghai/AndroidFastScroll?color=blue)](LICENSE)
 
 Fast scroll for Android `RecyclerView` and more.
 

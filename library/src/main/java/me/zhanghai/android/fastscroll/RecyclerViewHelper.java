@@ -129,7 +129,7 @@ class RecyclerViewHelper implements FastScroller.ViewHelper {
         if (popupTextProvider == null) {
             return null;
         }
-        int position = getFirstItemAdapterPosition();
+        int position = getPopupTextPosition();
         if (position == RecyclerView.NO_POSITION) {
             return null;
         }
@@ -220,5 +220,35 @@ class RecyclerViewHelper implements FastScroller.ViewHelper {
             return null;
         }
         return linearLayoutManager;
+    }
+    
+    // Fixes wrong popup position
+    private int getPopupTextPosition() {
+        int position = getFirstItemAdapterPosition();
+        int range = Math.max(getScrollRange() - mView.getHeight(), 1);
+        int offset = Math.min(getScrollOffset(), range);
+        LinearLayoutManager linearLayoutManager = getVerticalLinearLayoutManager();
+
+        if (position == RecyclerView.NO_POSITION) {
+            return RecyclerView.NO_POSITION;
+        }
+
+        if (linearLayoutManager == null) {
+            return position;
+        }
+
+        int firstVisibleItemPosition = linearLayoutManager.findFirstVisibleItemPosition();
+        int lastVisibleItemPosition = linearLayoutManager.findLastVisibleItemPosition();
+
+        if (firstVisibleItemPosition == RecyclerView.NO_POSITION
+            || lastVisibleItemPosition == RecyclerView.NO_POSITION) {
+
+            return position;
+        }
+
+        int positionOffset = (lastVisibleItemPosition - firstVisibleItemPosition + 1) * offset / range;
+
+        return Math.min((position + positionOffset), Objects.requireNonNull(mView.getAdapter()).getItemCount() - 1);
+
     }
 }

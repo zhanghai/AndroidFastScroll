@@ -246,7 +246,7 @@ class RecyclerViewHelper implements FastScroller.ViewHelper {
             return position;
         }
 
-        int positionOffset = (lastVisibleItemPosition - firstVisibleItemPosition + 1) * offset / range;
+        int positionOffset = (int) ((lastVisibleItemPosition - firstVisibleItemPosition + 1) * 1.0 * offset / range);
 
         return Math.min((position + positionOffset), Objects.requireNonNull(mView.getAdapter()).getItemCount() - 1);
 

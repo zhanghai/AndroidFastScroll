@@ -225,8 +225,6 @@ class RecyclerViewHelper implements FastScroller.ViewHelper {
     // Fixes wrong popup position
     private int getPopupTextPosition() {
         int position = getFirstItemAdapterPosition();
-        int range = Math.max(getScrollRange() - mView.getHeight(), 1);
-        int offset = Math.min(getScrollOffset(), range);
         LinearLayoutManager linearLayoutManager = getVerticalLinearLayoutManager();
 
         if (position == RecyclerView.NO_POSITION) {
@@ -237,6 +235,8 @@ class RecyclerViewHelper implements FastScroller.ViewHelper {
             return position;
         }
 
+        int range = Math.max(getScrollRange() - mView.getHeight(), 1);
+        int offset = Math.min(getScrollOffset(), range);
         int firstVisibleItemPosition = linearLayoutManager.findFirstVisibleItemPosition();
         int lastVisibleItemPosition = linearLayoutManager.findLastVisibleItemPosition();
 

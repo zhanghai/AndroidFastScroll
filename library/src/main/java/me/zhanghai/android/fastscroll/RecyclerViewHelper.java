@@ -27,6 +27,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.Objects;
+
 class RecyclerViewHelper implements FastScroller.ViewHelper {
 
     @NonNull
@@ -225,6 +227,8 @@ class RecyclerViewHelper implements FastScroller.ViewHelper {
     // Fixes wrong popup position
     private int getPopupTextPosition() {
         int position = getFirstItemAdapterPosition();
+        int range = Math.max(getScrollRange() - mView.getHeight(), 1);
+        int offset = Math.min(getScrollOffset(), range);
         LinearLayoutManager linearLayoutManager = getVerticalLinearLayoutManager();
 
         if (position == RecyclerView.NO_POSITION) {
@@ -235,8 +239,6 @@ class RecyclerViewHelper implements FastScroller.ViewHelper {
             return position;
         }
 
-        int range = Math.max(getScrollRange() - mView.getHeight(), 1);
-        int offset = Math.min(getScrollOffset(), range);
         int firstVisibleItemPosition = linearLayoutManager.findFirstVisibleItemPosition();
         int lastVisibleItemPosition = linearLayoutManager.findLastVisibleItemPosition();
 
@@ -246,7 +248,7 @@ class RecyclerViewHelper implements FastScroller.ViewHelper {
             return position;
         }
 
-        int positionOffset = (int) ((lastVisibleItemPosition - firstVisibleItemPosition + 1) * 1.0 * offset / range);
+        int positionOffset = (lastVisibleItemPosition - firstVisibleItemPosition + 1) * offset / range;
 
         return Math.min((position + positionOffset), Objects.requireNonNull(mView.getAdapter()).getItemCount() - 1);
 

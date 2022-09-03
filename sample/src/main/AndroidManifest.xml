@@ -25,7 +25,7 @@
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:icon="@mipmap/launcher_icon"
-        android:label="AndroidFastScroll Sample"
+        android:label="@string/app_name"
         android:roundIcon="@mipmap/launcher_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.Sample"

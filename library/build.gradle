@@ -1,11 +1,12 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 31
-    buildToolsVersion '32.0.0'
+    namespace 'me.zhanghai.android.fastscroll'
+    compileSdkVersion 33
+    buildToolsVersion '33.0.0'
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 31
+        targetSdkVersion 33
         versionCode Integer.parseInt(VERSION_CODE)
         versionName VERSION_NAME
         consumerProguardFiles 'proguard-rules.pro'
@@ -22,7 +23,7 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
 }
 

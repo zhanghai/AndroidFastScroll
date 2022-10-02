@@ -23,11 +23,11 @@ import android.graphics.drawable.Drawable;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.graphics.drawable.DrawableWrapper;
+import androidx.appcompat.graphics.drawable.DrawableWrapperCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 
 @SuppressLint("RestrictedApi")
-class AutoMirrorDrawable extends DrawableWrapper {
+class AutoMirrorDrawable extends DrawableWrapperCompat {
 
     public AutoMirrorDrawable(@NonNull Drawable drawable) {
         super(drawable);

@@ -87,6 +87,7 @@ public class FastScrollScrollView extends ScrollView implements ViewHelperProvid
     }
 
     @Override
+    @SuppressLint("ClickableViewAccessibility")
     public boolean onTouchEvent(@NonNull MotionEvent event) {
         return mViewHelper.onTouchEvent(event);
     }

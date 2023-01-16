@@ -21,7 +21,10 @@
   ~ that GradientDrawable didn't actually implement tinting until Lollipop MR1 (API 22). So if you
   ~ need to support API 21, you'll need to work around it yourself.
   -->
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
+<selector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="UnusedResources">
 
     <item android:state_pressed="true">
         <shape

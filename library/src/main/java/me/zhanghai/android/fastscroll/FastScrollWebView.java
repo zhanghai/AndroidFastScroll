@@ -87,6 +87,7 @@ public class FastScrollWebView extends WebView implements ViewHelperProvider {
     }
 
     @Override
+    @SuppressLint("ClickableViewAccessibility")
     public boolean onTouchEvent(@NonNull MotionEvent event) {
         return mViewHelper.onTouchEvent(event);
     }

@@ -78,6 +78,7 @@ public class FastScrollNestedScrollView extends NestedScrollView implements View
     }
 
     @Override
+    @SuppressLint("ClickableViewAccessibility")
     public boolean onTouchEvent(@NonNull MotionEvent event) {
         return mViewHelper.onTouchEvent(event);
     }

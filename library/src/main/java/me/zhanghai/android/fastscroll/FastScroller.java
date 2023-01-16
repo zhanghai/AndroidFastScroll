@@ -195,7 +195,7 @@ public class FastScroller {
         layoutView(mThumbView, thumbLeft, thumbTop, thumbLeft + mThumbWidth,
                 thumbTop + mThumbHeight);
 
-        String popupText = mViewHelper.getPopupText();
+        CharSequence popupText = mViewHelper.getPopupText();
         boolean hasPopup = !TextUtils.isEmpty(popupText);
         mPopupView.setVisibility(hasPopup ? View.VISIBLE : View.INVISIBLE);
         if (hasPopup) {
@@ -443,7 +443,7 @@ public class FastScroller {
         void scrollTo(int offset);
 
         @Nullable
-        default String getPopupText() {
+        default CharSequence getPopupText() {
             return null;
         }
     }

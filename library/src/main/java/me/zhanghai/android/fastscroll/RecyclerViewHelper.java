@@ -118,7 +118,7 @@ class RecyclerViewHelper implements FastScroller.ViewHelper {
 
     @Nullable
     @Override
-    public String getPopupText() {
+    public CharSequence getPopupText() {
         PopupTextProvider popupTextProvider = mPopupTextProvider;
         if (popupTextProvider == null) {
             RecyclerView.Adapter<?> adapter = mView.getAdapter();

@@ -3,7 +3,7 @@ apply plugin: 'com.android.library'
 android {
     namespace 'me.zhanghai.android.fastscroll'
     compileSdkVersion 33
-    buildToolsVersion '33.0.0'
+    buildToolsVersion '33.0.1'
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 33
@@ -23,7 +23,7 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.6.0-rc01'
+    implementation 'androidx.appcompat:appcompat:1.6.0'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
 }
 

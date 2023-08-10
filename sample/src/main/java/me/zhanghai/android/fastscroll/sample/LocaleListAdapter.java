@@ -18,6 +18,7 @@ package me.zhanghai.android.fastscroll.sample;
 
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -80,7 +81,7 @@ public class LocaleListAdapter extends RecyclerView.Adapter<LocaleListAdapter.Vi
 
     @NonNull
     @Override
-    public CharSequence getPopupText(int position) {
+    public CharSequence getPopupText(@NonNull View view, int position) {
         Locale locale = getItem(position);
         return locale.toString().substring(0, 1).toUpperCase(Locale.getDefault());
     }

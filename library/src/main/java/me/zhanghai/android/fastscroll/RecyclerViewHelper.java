@@ -133,7 +133,7 @@ class RecyclerViewHelper implements FastScroller.ViewHelper {
         if (position == RecyclerView.NO_POSITION) {
             return null;
         }
-        return popupTextProvider.getPopupText(position);
+        return popupTextProvider.getPopupText(mView, position);
     }
 
     private int getItemCount() {

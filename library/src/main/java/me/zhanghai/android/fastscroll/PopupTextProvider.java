@@ -16,10 +16,12 @@
 
 package me.zhanghai.android.fastscroll;
 
+import android.view.View;
+
 import androidx.annotation.NonNull;
 
 public interface PopupTextProvider {
 
     @NonNull
-    CharSequence getPopupText(int position);
+    CharSequence getPopupText(@NonNull View view, int position);
 }
